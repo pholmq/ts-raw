@@ -1361,8 +1361,8 @@ const defaultSettings =
 {
   "name": "Uranus",
   "size": 7.5,
-  "startPos": 378,
-  "speed": 0.075,
+  "startPos": 375,
+  "speed": 0.075033,
   "rotationSpeed": 0,
   "tilt": 0,
   "orbitRadius": 1920.13568,
@@ -3829,7 +3829,7 @@ function isValidDate(value) {
   if (aDate[2] > 31 || aDate[2] < 1) {
     return false;  
   }
-  if (Number(aDate[0]) === 0) return false; //Year 0 is not allowed
+  // if (Number(aDate[0]) === 0) return false; //Year 0 is not allowed
   if (Number(aDate[0]) === 1582 && Number(aDate[1]) === 10 ) {
     if (aDate[2] > 4 && aDate[2] < 15) return false; //Day 5-14, oct 1582 are not dates
   } 
@@ -3874,7 +3874,7 @@ function julianDateToDays(sDate) {
     y = Number(aDate[0]); m = Number(aDate[1]); d = Number(aDate[2]);
   };
   
-  if (y < 0 ) y += 1;
+  // if (y < 0 ) y += 1;
   //if (y === -1) y -= 1;
   
   if (m < 3) {
@@ -3937,7 +3937,7 @@ function julianCalDayToDate(g) {
   }
   month = ("0" + month).slice(-2);
   day = ("0" + day).slice(-2);
-  if (year <= 0) year -= 1;
+  // if (year <= 0) year -= 1;
   return year + "-" + month + "-" + day
 };
 
@@ -4463,6 +4463,7 @@ function getCircularText(text, diameter, startAngle, align, textInside, inwardFa
    //const white = new THREE.Color('rgb(255,255,255)');
   return 'rgb(' + Math.round(red) + ',' + Math.round(green) + ',' + Math.round(blue) + ')'; 
 }
+
     </script>
   </body>
 </html>

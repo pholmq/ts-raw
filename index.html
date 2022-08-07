@@ -10,7 +10,6 @@
         top: 100px;
         left: 100px;
       }
-
       body {
         margin: 0;
         padding: 0;
@@ -21,8 +20,7 @@
         display: block;
       }
 
-      /*Make dat gui panel unselectable so it doesent get
-            selected during mouse drag*/
+      /*Make dat gui panel unselectable so it doesent get selected during mouse drag*/
       #gui {
         -moz-user-select: none;
         -webkit-user-select: none;
@@ -30,36 +28,34 @@
         -o-user-select: none;
         user-select: none;
       }
-
       a {
         color: white;
       }
-
       a:link {
         text-decoration: none;
       }
-
       #info {
-        font-family: "Raleway", sans-serif;
+        font-family: "Cambria";
+        font-style: italic;
+        font-weight: bold;
         position: absolute;
         z-index: 10;
         bottom: 20px;
         left: 0;
         right: 0;
-        /*
-            margin: auto; */
+        /* margin: auto; */
         text-align: center;
         /* text-transform: uppercase; */
         color: #f2f5f0;
         font-size: 1.2em;
+        opacity: 0.7;
       }
     </style>
   </head>
 
   <body>
     <div id="info">
-      TYCHOSIUM 3D<br />
-      Visit
+      The TYCHOSIUM<br />
       <a href="https://www.tychos.space" target="_blank">www.tychos.space</a>
     </div>
     <!-- <script src="https://cdn.rawgit.com/mrdoob/stats.js/r17/build/stats.min.js"></script> -->
@@ -1899,7 +1895,7 @@ The TYCHOSIUM is free software; you can redistribute it and/or modify it under t
         pivotObj: "",
         axisHelper: true,
 
-        traceOn: false,
+        traceOn: true,
         traceLine: false,
         traceStartPos: 0,
         traceCurrPos: 0,
@@ -2353,9 +2349,11 @@ The TYCHOSIUM is free software; you can redistribute it and/or modify it under t
         sunLight: 2,
         background: 0x000000,
         Run: false,
+        traceBtn: true,
         "1 second equals": sWeek,
         speedFact: sWeek,
         speed: 1,
+        reverse: false,
         "Step forward": function () {
           if (o.speedFact === sYear) {
             o.pos = dateToDays(addYears(o.Date, 1)) * sDay + timeToPos(o.Time);
@@ -2529,7 +2527,7 @@ The TYCHOSIUM is free software; you can redistribute it and/or modify it under t
         jupiterElongation: 0.01,
         saturnElongation: 0.01,
 
-        "Info text": false,
+        infotext: true,
         Target: "",
         lookAtObj: {}
       };
@@ -3149,6 +3147,19 @@ V	Visual magnitude
         let ctrlFolder = gui.addFolder("Controls");
         ctrlFolder.add(o, "Run").listen();
         ctrlFolder
+          .add(o, "traceBtn")
+          .name("Trace")
+          .onFinishChange(() => {
+            tracePlanets.forEach((obj) => {
+              initTrace(obj);
+            });
+          });
+
+        //  tracePlanets.forEach(obj => {
+        //   folderT.add(obj, 'traceOn').name(obj.name).onFinishChange(()=>{initTrace(obj)})
+        // });
+
+        ctrlFolder
           .add(o, "1 second equals", {
             "1 second": sSecond,
             "1 minute": sMinute,
@@ -3164,7 +3175,17 @@ V	Visual magnitude
           .onFinishChange(function () {
             o.speedFact = Number(o["1 second equals"]);
           });
-        ctrlFolder.add(o, "speed", -4, 4).step(0.5).name("Forward/Backw.");
+        // ctrlFolder.add(o, 'speed', -4, 4).step(0.5).name('Forward/Backw.');
+        ctrlFolder
+          .add(o, "reverse")
+          .name("Reverse direction")
+          .onFinishChange(() => {
+            if (o.reverse) {
+              o.speed = -1;
+            } else {
+              o.speed = 1;
+            }
+          });
         ctrlFolder.add(o, "Step forward");
         ctrlFolder.add(o, "Step backward");
         ctrlFolder.add(o, "Reset");
@@ -3406,7 +3427,7 @@ V	Visual magnitude
         // folderO.add(o, 'cSphereSize', 0.1, 50).step(0.1).name('Sphere size').onChange(()=>{changeSphereScale()})
         // folderO.add(barycenter, 'visible').name('Barycenter')
 
-        // folderO.add(o, 'Info text' ).onFinishChange(()=>{
+        // folderO.add(o, infotext ).onFinishChange(()=>{
         //   showHideInfoText();
         // });
         // folderO.add(o, 'Performance').onFinishChange(() => {
@@ -3758,7 +3779,7 @@ V	Visual magnitude
 
       function tracePlanet(obj, pos) {
         let update = false;
-        if (!obj.traceOn) {
+        if (!obj.traceOn || !o.traceBtn) {
           obj.traceLine.visible = false;
           return;
         }
@@ -3809,8 +3830,8 @@ V	Visual magnitude
         obj.traceLine.visible = true;
       }
 
-      //Ugly hack to get the Zodiac ring to not rotate while following Earth.
-      //Set its rotation to the negative speed of Earths PVP orbit
+      //To get the Zodiac ring to not rotate while following Earth,
+      //set its rotation to the negative speed of Earths PVP orbit
       var zodiacRotationSpeed = 0.0002479160869310127;
       function moveModel(pos) {
         planets.forEach((obj) => {
@@ -3856,7 +3877,17 @@ V	Visual magnitude
         let days = pos / sDay - Math.floor(pos / sDay);
         let hours = Math.floor(days * 24);
         let minutes = Math.floor((days * 24 - hours) * 60);
-        let seconds = Math.floor(((days * 24 - hours) * 60 - minutes) * 60);
+        let seconds = Math.round(((days * 24 - hours) * 60 - minutes) * 60);
+
+        if (seconds === 60) {
+          seconds = 0;
+          minutes += 1;
+        }
+
+        if (minutes === 60) {
+          minutes = 0;
+          hours += 1;
+        }
 
         let hh = ("0" + hours).slice(-2);
         let mm = ("0" + minutes).slice(-2);
@@ -4426,11 +4457,16 @@ V	Visual magnitude
 
       function showHideInfoText() {
         var x = document.getElementById("info");
-        if (x.style.display === "none") {
+        if (o.infotext) {
           x.style.display = "block";
         } else {
           x.style.display = "none";
         }
+        // if (x.style.display === "none") {
+        //   x.style.display = "block";
+        // } else {
+        //   x.style.display = "none";
+        // }
       }
 
       function randomPointInSphere(radius) {

@@ -3176,17 +3176,17 @@ V	Visual magnitude
           .onFinishChange(function () {
             o.speedFact = Number(o["1 second equals"]);
           });
-        // ctrlFolder.add(o, 'speed', -4, 4).step(0.5).name('Forward/Backw.');
-        ctrlFolder
-          .add(o, "reverse")
-          .name("Reverse direction")
-          .onFinishChange(() => {
-            if (o.reverse) {
-              o.speed = -1;
-            } else {
-              o.speed = 1;
-            }
-          });
+        ctrlFolder.add(o, 'speed', -5, 5).step(0.5).name('Speed multiplier');
+//         ctrlFolder
+//           .add(o, "reverse")
+//           .name("Reverse direction")
+//           .onFinishChange(() => {
+//             if (o.reverse) {
+//               o.speed = -1;
+//             } else {
+//               o.speed = 1;
+//             }
+//           });
         ctrlFolder.add(o, "Step forward");
         ctrlFolder.add(o, "Step backward");
         ctrlFolder.add(o, "Reset");

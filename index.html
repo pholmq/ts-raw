@@ -1145,8 +1145,8 @@ The TYCHOSIUM is free software; you can redistribute it and/or modify it under t
           speed: 6.283185307179586,
           tilt: 0,
           orbitRadius: 100,
-          orbitCentera: -7.5,
-          orbitCenterb: 0,
+          orbitCentera: -7.2,
+          orbitCenterb: -0.2,
           orbitCenterc: 0,
           orbitTilta: 0.6,
           orbitTiltb: 0
@@ -1154,67 +1154,67 @@ The TYCHOSIUM is free software; you can redistribute it and/or modify it under t
         {
           name: "Mercury def B",
           size: 0.7,
-          startPos: 17,
+          startPos: 12,
           speed: -6.283185307179586,
           tilt: 0,
           orbitRadius: 0,
-          orbitCentera: -0.4,
+          orbitCentera: -0.3,
           orbitCenterb: -0.1,
           orbitCenterc: 0,
           orbitTilta: -1.3,
-          orbitTiltb: 0.7
+          orbitTiltb: 0.44
         },
         {
           name: "Mercury",
           size: 1.4,
-          startPos: -164.7,
-          speed: 26.08763,
+          startPos: -159.5,
+          speed: 26.0876304,
           tilt: 0,
           orbitRadius: 38.710225,
-          orbitCentera: -0.5,
-          orbitCenterb: -0.1,
+          orbitCentera: -0.4,
+          orbitCenterb: 0.2,
           orbitCenterc: -0.1,
-          orbitTilta: 4,
+          orbitTilta: 3,
           orbitTiltb: 1
         },
         {
           name: "Venus deferent A",
           size: 2,
-          startPos: 0.5,
+          startPos: 0.2,
           speed: 6.283185307179586,
           tilt: 0,
           orbitRadius: 100,
-          orbitCentera: 0,
-          orbitCenterb: -0.2,
+          orbitCentera: 0.4,
+          orbitCenterb: 0,
           orbitCenterc: 0,
           orbitTilta: 0,
-          orbitTiltb: -0.2
+          orbitTiltb: 0.15
         },
         {
           name: "Venus deferent B",
           size: 2,
-          startPos: 6.2,
+          startPos: 17,
           speed: -6.283185307179586,
           tilt: 0,
           orbitRadius: 0,
           orbitCentera: 0.3,
-          orbitCenterb: -0.1,
+          orbitCenterb: 0.6,
           orbitCenterc: 0,
           orbitTilta: 0,
-          orbitTiltb: 0
+          orbitTiltb: 0.1
         },
         {
           name: "Venus",
-          size: 3.9,
-          startPos: -13.5,
-          speed: 10.213313,
+          size: 7.1,
+          startPos: -24.05,
+          speed: 10.213314,
           tilt: 0,
           orbitRadius: 72.327789,
-          orbitCentera: 1,
-          orbitCenterb: -0.2,
+          orbitCentera: 0.65,
+          orbitCenterb: -0.6,
           orbitCenterc: -0.1,
           orbitTilta: 3.4,
-          orbitTiltb: 0.3
+          orbitTiltb: -0.1
         },
         {
           name: "Mars E deferent",
@@ -1397,32 +1397,32 @@ The TYCHOSIUM is free software; you can redistribute it and/or modify it under t
           orbitTiltb: 1.15
         },
         {
-          "name": "Halleys deferent",
-          "size": 1,
-          "startPos": 179,
-          "speed": -6.283185307179586,
-          "rotationSpeed": 0,
-          "tilt": 0,
-          "orbitRadius": 20,
-          "orbitCentera": -5,
-          "orbitCenterb": 10,
-          "orbitCenterc": 11,
-          "orbitTilta": 0,
-          "orbitTiltb": 0
-          },
-          {
-          "name": "Halleys",
-          "size": 2,
-          "startPos": 76.33,
-          "speed": -0.08301,
-          "rotationSpeed": 0,
-          "tilt": 0,
-          "orbitRadius": 1674.5,
-          "orbitCentera": -1540,
-          "orbitCenterb": -233.5,
-          "orbitCenterc": -507,
-          "orbitTilta": 6.4,
-          "orbitTiltb": 18.55
+          name: "Halleys deferent",
+          size: 1,
+          startPos: 179,
+          speed: -6.283185307179586,
+          rotationSpeed: 0,
+          tilt: 0,
+          orbitRadius: 20,
+          orbitCentera: -5,
+          orbitCenterb: 10,
+          orbitCenterc: 11,
+          orbitTilta: 0,
+          orbitTiltb: 0
+        },
+        {
+          name: "Halleys",
+          size: 2,
+          startPos: 76.33,
+          speed: -0.08301,
+          rotationSpeed: 0,
+          tilt: 0,
+          orbitRadius: 1674.5,
+          orbitCentera: -1540,
+          orbitCenterb: -233.5,
+          orbitCenterc: -507,
+          orbitTilta: 6.4,
+          orbitTiltb: 18.55
         },
         {
           name: "Eros deferent A",
@@ -2350,7 +2350,7 @@ The TYCHOSIUM is free software; you can redistribute it and/or modify it under t
         sunLight: 2,
         background: 0x000000,
         Run: false,
-        traceBtn: true,
+        traceBtn: false,
         "1 second equals": sWeek,
         speedFact: sWeek,
         speed: 1,
@@ -3176,17 +3176,10 @@ V	Visual magnitude
           .onFinishChange(function () {
             o.speedFact = Number(o["1 second equals"]);
           });
-        ctrlFolder.add(o, 'speed', -5, 5).step(0.5).name('Speed multiplier');
-//         ctrlFolder
-//           .add(o, "reverse")
-//           .name("Reverse direction")
-//           .onFinishChange(() => {
-//             if (o.reverse) {
-//               o.speed = -1;
-//             } else {
-//               o.speed = 1;
-//             }
-//           });
+        ctrlFolder.add(o, "speed", -5, 5).step(0.5).name("Speed multiplier");
+        // ctrlFolder.add(o, 'reverse').name('Reverse direction').onFinishChange(() => {
+        //   if (o.reverse) {o.speed = -1} else {o.speed = 1}
+        // });
         ctrlFolder.add(o, "Step forward");
         ctrlFolder.add(o, "Step backward");
         ctrlFolder.add(o, "Reset");
@@ -3869,12 +3862,12 @@ V	Visual magnitude
       }
 
       function posToDays(pos) {
-        pos += sHour * 12; //Hack to set the clock to tweleve for pos 0
+        pos += sHour * 12; //Set the clock to tweleve for pos 0
         return Math.floor(pos / sDay);
       }
 
       function posToTime(pos) {
-        pos += sHour * 12; //Hack to set the clock to tweleve for pos 0
+        pos += sHour * 12; //Set the clock to tweleve for pos 0
         let days = pos / sDay - Math.floor(pos / sDay);
         let hours = Math.floor(days * 24);
         let minutes = Math.floor((days * 24 - hours) * 60);
@@ -3900,7 +3893,7 @@ V	Visual magnitude
       function timeToPos(value) {
         let aTime = value.split(":");
         let pos = aTime[0] * sHour + aTime[1] * sMinute + aTime[2] * sSecond;
-        return (pos -= sHour * 12); //Hack to set the clock to tweleve for pos 0
+        return (pos -= sHour * 12); //Set the clock to tweleve for pos 0
       }
 
       //console.log(raToRadians("00:00:60"))

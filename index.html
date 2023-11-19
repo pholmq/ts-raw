@@ -1233,9 +1233,9 @@ const defaultSettings =
   "orbitRadius": 100,
   "orbitCentera": 12,
   "orbitCenterb": -20.5,
-  "orbitCenterc": 0,
-  "orbitTilta": 0,
-  "orbitTiltb": 0
+  "orbitCenterc": 1,
+  "orbitTilta": 0.8,
+  "orbitTiltb": 1
 },
 {
   "name": "Mars S deferent",
@@ -1254,15 +1254,15 @@ const defaultSettings =
   "name": "Mars",
   "size": 2.13,
   "startPos": 599,
-  "speed": -3.33986786, 
+  "speed": -3.33986786,
   "rotationSpeed": 0,
   "tilt": 0,
   "orbitRadius": 152.677,
   "orbitCentera": -13,
   "orbitCenterb": 6,
   "orbitCenterc": 0,
-  "orbitTilta": 0.8,
-  "orbitTiltb": 1.8
+  "orbitTilta": 1.15,
+  "orbitTiltb": 1
 },
 {
   "name": "Phobos",
@@ -2664,10 +2664,12 @@ const zLabelMaterial = new THREE.MeshBasicMaterial({
 const zLabel = new THREE.Mesh(zLabelGeometry, zLabelMaterial);
 zodiac.add(zLabel);
 zLabel.rotation.x = -Math.PI/2
-// scene.add( zodiac );
-earth.pivotObj.add(zodiac);
+scene.add( zodiac );
+zodiac.position.z = -37.8453
+// earth.pivotObj.add(zodiac);
 zodiac.position.y = -3; //Set it slightly below the Barycentre to avoid planet/zodiacring interference
-// zodiac.rotation.y = Math.PI/6;
+
+zodiac.rotation.y = Math.PI/6;
 zodiac.visible = false;
 
 const plane = new THREE.GridHelper(o.starDistance*2, 30, 0x008800, 0x000088);
@@ -3631,7 +3633,8 @@ function tracePlanet(obj, pos) {
 
 //To get the Zodiac ring to not rotate while following Earth,
 //set its rotation to the negative speed of Earths PVP orbit
-var zodiacRotationSpeed = 0.0002479160869310127
+//2310 Not needed anymore since the zodiac has a fixed position now
+// var zodiacRotationSpeed = 0.0002479160869310127
 function moveModel(pos){
   planets.forEach(obj => {
     obj.orbitObj.rotation.y = obj.speed * pos - obj.startPos * (Math.PI/180)
@@ -3639,7 +3642,7 @@ function moveModel(pos){
       obj.planetObj.rotation.y = obj.rotationSpeed * pos 
     }
   })
- zodiac.rotation.y = -Math.PI/3 + zodiacRotationSpeed * pos
+ // zodiac.rotation.y = -Math.PI/3 + zodiacRotationSpeed * pos
 }
 // Math.PI/6 + 
 function onWindowResize() {
@@ -4482,8 +4485,6 @@ function getCircularText(text, diameter, startAngle, align, textInside, inwardFa
    //const white = new THREE.Color('rgb(255,255,255)');
   return 'rgb(' + Math.round(red) + ',' + Math.round(green) + ',' + Math.round(blue) + ')'; 
 }
-
-	    
 
     </script>
   </body>
